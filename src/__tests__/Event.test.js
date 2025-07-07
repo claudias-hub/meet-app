@@ -50,4 +50,13 @@ describe('<Event /> component', () => {
     await user.click(hideDetailsButton);
     expect(queryByText(event.description)).not.toBeInTheDocument();
   });
+
+  test('shows fallback text when event description is missing', async () => {
+    const eventWithoutDescription = { ...event, description: undefined };
+    const { queryByRole, queryByText } = render(<Event event={eventWithoutDescription} />);
+    const user = userEvent.setup();
+    const showDetailsButton = queryByRole('button', { name: /show details/i });
+    await user.click(showDetailsButton);
+    expect(queryByText(/No description available/i)).toBeInTheDocument();
+  });
 });

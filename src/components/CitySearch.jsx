@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const CitySearch = ({ allLocations }) => {
+const CitySearch = ({ allLocations, setCurrentCity }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
@@ -14,10 +14,16 @@ const CitySearch = ({ allLocations }) => {
     setSuggestions(filteredLocations);
   };
 
+  useEffect(() => {
+    setSuggestions(allLocations);
+  }, [JSON.stringify(allLocations)]);
+
+
   const handleItemClicked = (event) => {
     const value = event.target.textContent;
     setQuery(value);
     setShowSuggestions(false); // hide the list after selection
+    setCurrentCity(value);
   };
 
   return (
