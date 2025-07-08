@@ -1,30 +1,25 @@
 // src/components/NumberOfEvents.jsx
-import React, { useState } from 'react';
+import React from 'react';
 
-const NumberOfEvents = ({ number, onNumberChange }) => {
-  // If you want to manage state here, you can use useState:
-  const [value, setValue] = useState(number || 32);
+const NumberOfEvents = ({ currentNOE, setCurrentNOE }) => {
 
   const handleInputChanged = (event) => {
     const inputValue = event.target.value;
     // If the input is empty, set value to empty string
     if (inputValue === '') {
-      setValue('');
-      if (onNumberChange) onNumberChange('');
+      setCurrentNOE('');
       return;
     }
-    const newValue = parseInt(inputValue, 10);
-    setValue(newValue);
-    if (onNumberChange) onNumberChange(newValue);
+    setCurrentNOE(Number(inputValue));
   };
 
   return (
-    <div id="number-of-events">
+    <div id="number-of-events" className="number-of-events">
       <label htmlFor="number-input">Number of Events:</label>
       <input
         id="number-input"
         type="number"
-        value={value=== '' ? '' : value}
+        value={currentNOE === '' ? '' : currentNOE}
         onChange={handleInputChanged}
         role="spinbutton"
       />
