@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "test": "set NODE_NO_WARNINGS=1 && jest",
     "test:coverage": "set NODE_NO_WARNINGS=1 && jest --coverage"
+    
   },
   "dependencies": {
     "react": "^19.1.0",
