@@ -1,3 +1,5 @@
+// src/__test__/EventList.test.js
+
 jest.mock('../api', () => ({
   getEvents: jest.fn(() => Promise.resolve([
     {
@@ -18,10 +20,11 @@ jest.mock('../api', () => ({
 }));
 
 import React from 'react';
-import { render, within, waitFor, act } from '@testing-library/react';
+import { render, within, waitFor } from '@testing-library/react';
 import EventList from '../components/EventList';
 import { getEvents } from '../api';
 import App from '../App';
+import { act } from 'react';
 
 
 

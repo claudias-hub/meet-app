@@ -1,9 +1,18 @@
+// src/__test__/CitySearch.test.js
+
 import React from 'react';
-import { render, within, waitFor, act } from '@testing-library/react';
+import { render, within, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import CitySearch from '../components/CitySearch';
-import { extractLocations, getEvents } from '../api';
 import App from '../App';
+import { getEvents, extractLocations } from '../api';
+import { act } from 'react';
+
+jest.mock('../api');
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('<CitySearch /> component', () => {
   let CitySearchComponent;
@@ -26,7 +35,10 @@ describe('<CitySearch /> component', () => {
   test('renders a list of suggestions when city textbox gains focus', async () => {
     const user = userEvent.setup();
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
-    await user.click(cityTextBox);
+    await act(async () => {
+      await user.click(cityTextBox);
+    });
+    
     const suggestionList = CitySearchComponent.queryByRole('list');
     expect(suggestionList).toBeInTheDocument();
     expect(suggestionList).toHaveClass('suggestions');
@@ -39,7 +51,10 @@ describe('<CitySearch /> component', () => {
 
     // user types "Berlin" in city textbox
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
-    await user.type(cityTextBox, "Berlin");
+    await act(async () => {
+      await user.type(cityTextBox, "Berlin");
+    });
+    
 
     // filter allLocations to locations matching "Berlin"
     const suggestions = allLocations? allLocations.filter((location) => {
@@ -60,12 +75,17 @@ describe('<CitySearch /> component', () => {
     CitySearchComponent.rerender(<CitySearch allLocations={allLocations} setCurrentCity={() => {}} />);
 
     const cityTextBox = CitySearchComponent.queryByRole('textbox');
-    await user.type(cityTextBox, "Berlin");
+    await act(async () => {
+      await user.type(cityTextBox, "Berlin");
+    });
+    
 
     // the suggestion's textContent look like this: "Berlin, Germany"
     const BerlinGermanySuggestion = CitySearchComponent.queryAllByRole('listitem')[0];
-
-    await user.click(BerlinGermanySuggestion);
+    await act(async () => {
+      await user.click(BerlinGermanySuggestion);
+    });
+    
 
     expect(cityTextBox).toHaveValue(BerlinGermanySuggestion.textContent);
   });
@@ -82,7 +102,10 @@ describe('<CitySearch /> integration', () => {
 
     const CitySearchDOM = AppDOM.querySelector('#city-search');
     const cityTextBox = within(CitySearchDOM).queryByRole('textbox');
-    await user.click(cityTextBox);
+    await act(async () => {
+      await user.click(cityTextBox);
+    });
+    
 
     const allEvents = await getEvents();
     const allLocations = extractLocations(allEvents);

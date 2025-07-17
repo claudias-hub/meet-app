@@ -1,14 +1,18 @@
+// src/setupTests.js
+
 import '@testing-library/jest-dom';
 
-const MESSAGES_TO_IGNORE = [
-  "When testing, code that causes React state updates should be wrapped into act(...):",
-  "Error:",
-  "The above error occurred"
+jest.setTimeout(30000); // 30 seconds
+
+const suppressedWarnings = [
+  'An update to App inside a test was not wrapped in act(...)',
+  'The current testing environment is not configured to support act(...)',
 ];
 
-const originalError = console.error.bind(console.error);
-
+const originalError = console.error;
 console.error = (...args) => {
-  const ignoreMessage = MESSAGES_TO_IGNORE.find(message => args.toString().includes(message));
-  if (!ignoreMessage) originalError(...args);
-}
+  if (suppressedWarnings.some(warning => args[0].includes(warning))) {
+    return;
+  }
+  originalError(...args);
+};

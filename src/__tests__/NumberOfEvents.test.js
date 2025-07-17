@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NumberOfEvents from '../components/NumberOfEvents';
+import { act } from 'react';
 
 describe('<NumberOfEvents /> component', () => {
   test('renders input spinbutton', () => {
@@ -22,8 +23,13 @@ describe('<NumberOfEvents /> component', () => {
 
     const input = getByRole('spinbutton');
     const user = userEvent.setup();
-    await user.clear(input);
-    await user.type(input, '10');
+    await act(async () => {
+      await user.clear(input);
+    });
+    await act(async () => {
+      await user.type(input, '10');
+    });
+    
 
     // Simulate prop update
     rerender(<NumberOfEvents currentNOE={10} setCurrentNOE={setCurrentNOE} />);

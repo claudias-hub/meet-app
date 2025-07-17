@@ -1,9 +1,17 @@
-import React from 'react';
-import { render, within, act } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
-import { getEvents } from '../api';
-import App from '../App';
+// src/__test__/App.test.js
 
+import React from 'react';
+import { render, within } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import App from '../App';
+import { getEvents } from '../api';
+import { act } from 'react';
+
+jest.mock('../api');
+
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('<App /> component', () => {
   let AppDOM;
@@ -34,9 +42,15 @@ describe('<App /> integration', () => {
     const CitySearchInput = within(CitySearchDOM).queryByRole('textbox');
 
 
-    await user.type(CitySearchInput, "Berlin");
+    await act(async () => {
+      await user.type(CitySearchInput, "Berlin");
+    });
+
     const berlinSuggestionItem = within(CitySearchDOM).queryByText('Berlin, Germany');
-    await user.click(berlinSuggestionItem);
+
+    await act(async () => {
+      await user.click(berlinSuggestionItem);
+    });
 
 
     const EventListDOM = AppDOM.querySelector('#event-list');
@@ -68,7 +82,9 @@ describe('<App /> integration', () => {
     const NumberOfEventsInput = within(NumberOfEventsDOM).queryByRole('spinbutton');
 
     // Clear the default value (32) and type 10
-    await user.type(NumberOfEventsInput, "{backspace}{backspace}10");
+    await act(async () => {
+      await user.type(NumberOfEventsInput, "{backspace}{backspace}10");
+    });
 
     // Find the EventList and check the number of rendered events
     const EventListDOM = AppDOM.querySelector('#event-list');
