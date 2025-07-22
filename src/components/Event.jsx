@@ -29,15 +29,15 @@ const Event = ({ event }) => {
     <div className={`event${showDetails ? " show-details" : ""}`}>
       <div className="event-date">
         <div>
-          <strong>Start:</strong>
-          <br />
-          {formattedDate(startDate)}<br />
+          <strong>Start: </strong> 
+          
+          {formattedDate(startDate)}
           {formattedTime(startDate)}
         </div>
         <div>
-          <strong>End:</strong>
-          <br />
-          {formattedDate(endDate)}<br />
+          <strong>End: </strong>
+          
+          {formattedDate(endDate)}
           {formattedTime(endDate)}
         </div>
       </div>
