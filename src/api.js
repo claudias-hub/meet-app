@@ -23,13 +23,23 @@ export const getEvents = async () => {
 
   if (token) {
     removeQuery();
-    // Replace with your real endpoint!
     const url = "https://2s37uubk4d.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/" + token;
-    const response = await fetch(url);
-    const result = await response.json();
-    if (result) {
-      return result.events;
-    } else return null;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const result = await response.json();
+      if (result) {
+        return result.events;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      alert("Sorry, we couldn't load events. Please check your connection and try again.");
+      console.error("Fetch error in getEvents:", error);
+      return null;
+    }
   }
 };
 

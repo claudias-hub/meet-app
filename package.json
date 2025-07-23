@@ -3,16 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://claudias-hub.github.io/meet-app/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "test": "set NODE_NO_WARNINGS=1 && jest",
-    "test:coverage": "set NODE_NO_WARNINGS=1 && jest --coverage"
+    "test:coverage": "set NODE_NO_WARNINGS=1 && jest --coverage",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "atatus-spa": "^4.6.4",
+    "gh-pages": "^6.3.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
