@@ -1,4 +1,4 @@
-
+// src/features/specifyNumberOfEvents.test.js
 
 import React from 'react';
 import { render, screen, within } from '@testing-library/react';
@@ -27,7 +27,7 @@ defineFeature(feature, test => {
       const eventList = await screen.findByRole('list', { name: /event list/i, hidden: true })
         .catch(() => screen.getByRole('list')); // fallback if no aria-label
 
-      const eventItems = within(eventList).getAllByRole('listitem');
+      const eventItems = await within(eventList).findAllByRole('listitem');
       expect(eventItems.length).toBe(32);
     });
   });
@@ -50,7 +50,7 @@ defineFeature(feature, test => {
       const eventList = await screen.findByRole('list', { name: /event list/i, hidden: true })
         .catch(() => screen.getByRole('list'));
 
-      const eventItems = within(eventList).getAllByRole('listitem');
+      const eventItems = await within(eventList).findAllByRole('listitem');
       expect(eventItems.length).toBe(5);
     });
   });

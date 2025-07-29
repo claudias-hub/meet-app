@@ -1,38 +1,36 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import NumberOfEvents from '../components/NumberOfEvents';
-import { act } from 'react';
+
 
 describe('<NumberOfEvents /> component', () => {
   test('renders input spinbutton', () => {
-    const { getByRole } = render(<NumberOfEvents currentNOE={32} setCurrentNOE={() => {}} />);
+    const { getByRole } = render(<NumberOfEvents currentNOE={32} setCurrentNOE={() => {}} setErrorAlert={() => {}}/>);
     expect(getByRole('spinbutton')).toBeInTheDocument();
   });
 
   test('default value is 32', () => {
-    const { getByRole } = render(<NumberOfEvents currentNOE={32} setCurrentNOE={() => {}} />);
+    const { getByRole } = render(<NumberOfEvents currentNOE={32} setCurrentNOE={() => {}} setErrorAlert={() => {}}/>);
     expect(getByRole('spinbutton')).toHaveValue(32);
   });
 
   test('value changes when user types', async () => {
-    // We'll use a variable to simulate state change
-    let noe = 32;
-    const setCurrentNOE = (val) => { noe = val; };
-    const { getByRole, rerender } = render(<NumberOfEvents currentNOE={noe} setCurrentNOE={setCurrentNOE} />);
+    function Wrapper() {
+      const [noe, setNoe] = React.useState(32);
+      return (
+        <NumberOfEvents currentNOE={noe} setCurrentNOE={setNoe} setErrorAlert={() => {}}
+        />
+      );
+    }
 
-    const input = getByRole('spinbutton');
+    render(<Wrapper />);
+
+    const input = screen.getByRole('spinbutton');
     const user = userEvent.setup();
-    await act(async () => {
-      await user.clear(input);
-    });
-    await act(async () => {
-      await user.type(input, '10');
-    });
-    
 
-    // Simulate prop update
-    rerender(<NumberOfEvents currentNOE={10} setCurrentNOE={setCurrentNOE} />);
-    expect(getByRole('spinbutton')).toHaveValue(10);
+    await user.clear(input);
+    await user.type(input, '10');
+    expect(input).toHaveValue(10);
   });
 });

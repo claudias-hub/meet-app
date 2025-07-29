@@ -1,17 +1,29 @@
+// src/components/CitySearch.jsx
+
 import React, { useState, useEffect } from 'react';
 
-const CitySearch = ({ allLocations, setCurrentCity }) => {
+const CitySearch = ({ allLocations, setCurrentCity, setInfoAlert, setErrorAlert }) => {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
   const handleInputChanged = (event) => {
     const value = event.target.value;
-    const filteredLocations = allLocations ? allLocations.filter((location) => {
-      return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
-    }) : [];
+    const filteredLocations = allLocations
+      ? allLocations.filter((location) =>
+          location.toUpperCase().indexOf(value.toUpperCase()) > -1
+        )
+      : [];
     setQuery(value);
     setSuggestions(filteredLocations);
+
+    if (filteredLocations.length === 0) {
+      setInfoAlert("");
+      setErrorAlert("We can not find the city you are looking for. Please try another city.");
+    } else {
+      setInfoAlert("");
+      setErrorAlert("");
+    }
   };
 
   useEffect(() => {

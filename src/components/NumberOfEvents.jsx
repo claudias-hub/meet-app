@@ -1,16 +1,24 @@
 // src/components/NumberOfEvents.jsx
 import React from 'react';
 
-const NumberOfEvents = ({ currentNOE, setCurrentNOE }) => {
+const NumberOfEvents = ({ currentNOE, setCurrentNOE, setErrorAlert }) => {
 
   const handleInputChanged = (event) => {
-    const inputValue = event.target.value;
-    // If the input is empty, set value to empty string
-    if (inputValue === '') {
+    
+    const value = event.target.value;
+    
+  
+    if (value === '') {
       setCurrentNOE('');
+      setErrorAlert('');
       return;
     }
-    setCurrentNOE(Number(inputValue));
+    if (isNaN(value) || value <= 0) {
+      setErrorAlert("Please enter a valid number of events.");
+    } else {
+      setErrorAlert("");
+      setCurrentNOE(Number(value)); // Only update if valid!
+    }
   };
 
   return (
@@ -19,7 +27,7 @@ const NumberOfEvents = ({ currentNOE, setCurrentNOE }) => {
       <input
         id="number-input"
         type="number"
-        value={currentNOE === '' ? '' : currentNOE}
+        value={currentNOE || ''}
         onChange={handleInputChanged}
         role="spinbutton"
       />
