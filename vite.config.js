@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: '/meet-app/',
+  base: '/',
   plugins: [
    react(),
    VitePWA({
