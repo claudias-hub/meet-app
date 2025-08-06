@@ -59,7 +59,7 @@ export const getEvents = async () => {
       // If there's an error but we have cached events, return those
       const cachedEvents = localStorage.getItem("lastEvents");
       if (cachedEvents) {
-        alert("Using cached events due to connection issues.");
+        setWarningText("Using cached events due to connection issues.");
         return JSON.parse(cachedEvents);
       }
 
