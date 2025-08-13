@@ -1,7 +1,12 @@
+/** @jest-environment node */
+
 // src/features/EndToEnd.test.js 
+
 
 import puppeteer from 'puppeteer';
 
+// 🔹 Extend Jest timeout for all tests in this file
+jest.setTimeout(60000);
 
 describe('Feature 2: Show/Hide an Event Details', () => {
   let browser;
@@ -9,8 +14,8 @@ describe('Feature 2: Show/Hide an Event Details', () => {
 
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: false,  // Set to true to run tests without opening browser window
-      slowMo: 250,      // Slow down actions by 250ms so you can see them
+      headless: true,  // Set to true to run tests without opening browser window
+      slowMo: 0,      // Slow down actions by 250ms so you can see them
       timeout: 0        // Disable Puppeteer timeout
     });
     page = await browser.newPage();
@@ -62,8 +67,8 @@ describe('Feature 1: Filter Events By City', () => {
 
   beforeAll(async () => {
     browser = await puppeteer.launch({
-      headless: false,
-      slowMo: 250,
+      headless: true,
+      slowMo: 0,
       timeout: 0,
     });
     page = await browser.newPage();
@@ -112,5 +117,5 @@ describe('Feature 1: Filter Events By City', () => {
       const location = await event.$eval('.event-main h3', el => el.textContent);
       expect(location).toContain('Berlin, Germany');
     }
-  }, 30000);
+  });
 });
