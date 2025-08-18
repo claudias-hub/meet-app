@@ -8,6 +8,7 @@ import { extractLocations, getEvents } from './api';
 import { InfoAlert, ErrorAlert, WarningAlert } from './components/Alert';
 import './App.css';
 import CityEventsChart from './components/CityEventsChart';
+import EventGenresChart from './components/EventGenresChart';
 
 
 const App = () => {
@@ -65,8 +66,9 @@ const App = () => {
       <NumberOfEvents currentNOE={currentNOE} setCurrentNOE={setCurrentNOE} setInfoAlert={setInfoAlert} setErrorAlert={setErrorAlert}/>
       <div className="charts-container">
         <CityEventsChart allLocations={allLocations} events={events} />
-        {/* The pie chart will go here later */}
+        <EventGenresChart events={events} />
       </div>
+      
       <EventList events={events} />
       
     </div>

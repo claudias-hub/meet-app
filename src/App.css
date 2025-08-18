@@ -447,6 +447,27 @@ html, body {
   }
 }
 
+/*Charts*/
+.charts-container {
+display: grid;
+grid-template-columns: 1fr;
+gap: 2rem;
+margin: 2rem 0;
+}
+
+@media (min-width: 768px) {
+  .charts-container {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+  }
+}
+
+.charts-container .recharts-responsive-container {
+  background: rgba(255, 255, 255, 0.05); /* subtle, semi-transparent backdrop */
+  border-radius: 8px;                    /* match your rounded card style */
+  padding: 0.5rem;                       
+}
+
 /* ==================== */
 /* Scrollbar Styling    */
 /* ==================== */
