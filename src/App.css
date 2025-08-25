@@ -451,8 +451,9 @@ html, body {
 .charts-container {
 display: grid;
 grid-template-columns: 1fr;
-gap: 2rem;
-margin: 2rem 0;
+gap: 1rem;
+margin: 1rem 0;
+padding-bottom: 1.8rem;
 }
 
 @media (min-width: 768px) {
@@ -463,9 +464,30 @@ margin: 2rem 0;
 }
 
 .charts-container .recharts-responsive-container {
-  background: rgba(255, 255, 255, 0.05); /* subtle, semi-transparent backdrop */
+  background: rgba(255, 255, 255, 0.01); /* subtle, semi-transparent backdrop */
   border-radius: 8px;                    /* match your rounded card style */
-  padding: 0.5rem;                       
+  padding: 0.5rem;    
+  margin-bottom: 1rem; /* space below each chart card */
+  box-sizing: border-box;
+  overflow: visible !important;                   
+}
+
+/* Chart fixes: avoid clipping and hide large legends on very small screens */
+.charts-container .recharts-responsive-container,
+.charts-container svg,
+.charts-container .recharts-surface {
+  overflow: visible !important;
+}
+
+/* Hide Recharts legend on very small screens to avoid overlap */
+@media (max-width: 480px) {
+  .recharts-legend {
+    display: none !important;
+  }
+  /* reduce chart heights on very small phones */
+  .charts-container .recharts-responsive-container {
+    height: 220px !important;
+  }
 }
 
 /* ==================== */
